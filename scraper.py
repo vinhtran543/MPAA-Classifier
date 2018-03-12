@@ -28,7 +28,12 @@ for key in page_directories.keys():
         movie_page = requests.get('http://www.imdb.com/'+urls[i])
         movie_tree = html.fromstring(movie_page.content)
         movie_description = movie_tree.xpath('//div[@itemprop="description"]//p/text()')
-        text_file.write(movie_description[0])
+        if len(movie_description) > 0:
+            text_file.write(movie_description[0])
+        else:
+            print("\t\t *** ERROR Omitting")
+            text_file.close()
+            continue
 
         # Grabs Synopsis
         synopsis_url = movie_tree.xpath('//div[@id="titleStoryLine"]//span[@class="see-more inline"]//a/@href')[0]
