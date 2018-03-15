@@ -1,6 +1,6 @@
 # Run python file formatted as
-# python3 classifier.py model_name.nb testing_folder_name info
-# Note: info argument is optional
+# python3 classifier.py model_name.nb testing_folder_name --info
+# Note: --info argument is optional
 
 import nltk
 import pickle
@@ -13,7 +13,8 @@ total_count = 0
 vocab_count = 0
 actual_files = []
 pred_files = []
-info_state = ""
+nolist_state = False
+info_state = False
 
 print()
 
@@ -30,9 +31,12 @@ folder = sys.argv[2]
 files = ".*"
 
 # [OPTIONAL] Specify if testing accuracy, precision, recall,
-# f-score, indicated by "info" argument
-if len(sys.argv) > 3:
-    info_state = sys.argv[3]
+# f-score, indicated by "--info" argument
+for state in sys.argv:
+    if state == "--nolist":
+        nolist_state = True
+    if state == "--info":
+        info_state = True
 
 # Load movie model
 model = pickle.load(open(model, "rb"))
@@ -86,12 +90,13 @@ for f in reader.fileids():
     pred_files.append(prediction)
 
     # Print prediction
-    print(f + " #" + prediction + "#")
+    if not nolist_state:
+        print(f + " #" + prediction + "#")
 
 # print(model)        # Debug Info
 
 # Print additional info if user specified
-if info_state != "info":
+if not info_state:
     sys.exit()
 
 # Construct the actual list
