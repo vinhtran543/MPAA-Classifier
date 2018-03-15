@@ -117,3 +117,45 @@ for i, f_a in enumerate(actual_files):
 accuracy = accuracy_correct / accuracy_total
 print("Accuracy: " + str(accuracy))
 print(str(accuracy_correct) + " out of " + str(accuracy_total))
+
+# Loop through all the classes for precision, recall, and f-score
+for c_name in model:
+    print("\n====" + c_name['label'] + " Precision, Recall, F-Score====")
+    # Precision
+    precision_correct = 0
+    precision_total = 0
+    precision = 0
+    for i, f_p in enumerate(pred_files):
+        if c_name['label'] == f_p:
+            if f_p == actual_files[i]:
+                precision_correct += 1
+            precision_total += 1
+    if precision_total == 0:
+        print("Invalid Precision")
+    else:
+        precision = precision_correct / precision_total
+        print("Precision: " + str(precision))
+        print(str(precision_correct) + " out of " + str(precision_total))
+
+    # Recall
+    recall_correct = 0
+    recall_total = 0
+    recall = 0
+    for i, f_a in enumerate(actual_files):
+        if c_name['label'] == f_a:
+            if f_a == pred_files[i]:
+                recall_correct += 1
+            recall_total += 1
+    if recall_total == 0:
+        print("\nInvalid Recall")
+    else:
+        recall = recall_correct / recall_total
+        print("\nRecall: " + str(recall))
+        print(str(recall_correct) + " out of " + str(recall_total))
+
+    # F-Score
+    if (precision + recall) == 0:
+        print("\nInvalid F-Score")
+    else:
+        fscore = (2 * precision * recall) / (precision + recall)
+        print("\nF-Score: " + str(fscore))
