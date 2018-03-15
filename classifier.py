@@ -35,7 +35,7 @@ files = ".*"
 for state in sys.argv:
     if state == "--nolist":
         nolist_state = True
-    if state == "--info":
+    elif state == "--info":
         info_state = True
 
 # Load movie model
