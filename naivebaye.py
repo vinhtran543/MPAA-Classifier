@@ -26,13 +26,14 @@ for f in os.listdir(directory):
 print(classes)
 
 model = []
+fileCounter = 0
 # Extract Corpuses
 for c in classes:
     c_corpus = nltk.corpus.PlaintextCorpusReader(directory, c + '.*.txt')
     print(c_corpus)
     c_fd = nltk.FreqDist(c_corpus.words())
-    c_count = len(c_corpus.words())
-    model.append({'label':c, 'count':c_count, 'fd':c_fd})
+    fileCounter += 1
+    model.append({'label':c, 'count':fileCounter, 'fd':c_fd})
 
 pickle.dump(model, open(sys.argv[2], 'wb'))
 
