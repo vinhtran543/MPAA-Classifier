@@ -1,3 +1,7 @@
+# Run python file formatted as
+# python3 classifier.py model_name.nb folder_name info
+# Note: info argument is optional
+
 import nltk
 import pickle
 import math
@@ -7,13 +11,15 @@ from collections import defaultdict
 class_prob = {}
 total_count = 0
 vocab_count = 0
+files_actual = []
+files_predicted = []
 
 # Check for model file and folder location in arguments
 if len(sys.argv) < 3:
     print("Needs a model and a folder argument.\n")
     sys.exit()
 
-# Specify model on first argument, should be on same directory
+# Specify model on first argument
 model = sys.argv[1]
 
 # Specify folder on second argument
@@ -26,6 +32,7 @@ info_state = sys.argv[1]
 
 # Load movie model
 model = pickle.load(open(model, "rb"))
+print(model)
 
 # Sum total number of files in model
 total_count = sum(c_name['count'] for c_name in model)
@@ -73,9 +80,21 @@ for f in reader.fileids():
     # Compare scores to see which one is highest -- final verdict
     prediction = max(score, key=score.get)
 
-    #### For debugging ####
+    # Print prediction
     print(f + " #" + prediction + "#")
 
+# Check 
+if info_state != "info":
+    sys.exit()
+
+print("\n====Accuracy====")
 # Accuracy
 accuracy_correct = 0
 accuracy_total = 0
+for i, f_a in enumerate(files_actual):
+    if f_a == files_predicted[i]:
+        accuracy_correct += 1
+    accuracy_total += 1
+accuracy = accuracy_correct / accuracy_total
+print("Accuracy: " + str(accuracy))
+print(str(accuracy_correct) + " out of " + str(accuracy_total))
