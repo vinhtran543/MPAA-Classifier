@@ -10,8 +10,10 @@ if(len(sys.argv) < 3):
 
 directory = sys.argv[1]
 
-#Rating counters
+#Rating counter
 fileCounter = 0
+
+#Rating boolean
 isPG13 = False
 isNC17 = False
 isG = False
@@ -25,8 +27,8 @@ for f in os.listdir(directory):
     #print(temp)
     if(temp[1] == '13' or temp[1] == '17' and (isPG13 == False or isNC17 == False)):
         temp2 = temp[0] + '-' + temp[1]     #create string PG-13 or NC-17
-        #PG-13, NC-17 rating 
-        #first time class initialization, give it file count 1
+
+        #PG-13, NC-17 rating, first time class initialization, give it file count 1
         if not(temp2 in dictionary):
             dict = {temp2: 1}
             dictionary.update(dict)
@@ -38,7 +40,6 @@ for f in os.listdir(directory):
         
     #G, PG, R also no NC rating       
     #first time dictionary initialization, give it file count 1
-
     if((temp[1] != '13' and temp[1] != '17') and temp[0] != 'NC' and (isG == False or isPG == False or isR == False)):
         if not(temp[0] in dictionary):
             dict = {temp[0]: 1}
@@ -92,5 +93,3 @@ pickle.dump(model, open(sys.argv[2], 'wb'))
 print('Training Data Created:')
 print('\tClasses: {0}'.format(dictionary))
 print('\tStored: {0}'.format(sys.argv[2]))
-
-
