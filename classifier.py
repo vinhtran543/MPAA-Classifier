@@ -1,5 +1,5 @@
 # Run python file formatted as
-# python3 classifier.py model_name.nb folder_name info
+# python3 classifier.py model_name.nb testing_folder_name info
 # Note: info argument is optional
 
 import nltk
@@ -11,8 +11,11 @@ from collections import defaultdict
 class_prob = {}
 total_count = 0
 vocab_count = 0
-files_actual = []
-files_predicted = []
+actual_files = []
+pred_files = []
+info_state = ""
+
+print()
 
 # Check for model file and folder location in arguments
 if len(sys.argv) < 3:
@@ -28,11 +31,11 @@ files = ".*"
 
 # [OPTIONAL] Specify if testing accuracy, precision, recall,
 # f-score, indicated by "info" argument
-info_state = sys.argv[1]
+if len(sys.argv) > 3:
+    info_state = sys.argv[3]
 
 # Load movie model
 model = pickle.load(open(model, "rb"))
-print(model)
 
 # Sum total number of files in model
 total_count = sum(c_name['count'] for c_name in model)
@@ -79,20 +82,36 @@ for f in reader.fileids():
 
     # Compare scores to see which one is highest -- final verdict
     prediction = max(score, key=score.get)
+    # Add prediction to prediction list
+    pred_files.append(prediction)
 
     # Print prediction
     print(f + " #" + prediction + "#")
 
-# Check 
+# print(model)        # Debug Info
+
+# Print additional info if user specified
 if info_state != "info":
     sys.exit()
+
+# Construct the actual list
+for f in reader.fileids():
+    temp_label = ""
+    # Go through each class
+    for c_name in model:
+        # Check if the file starts with the class name and is the largest string
+        if f.startswith(c_name['label']) and c_name['label'] > temp_label:
+            temp_label = c_name['label']
+    # Add to actual list
+    actual_files.append(temp_label)
 
 print("\n====Accuracy====")
 # Accuracy
 accuracy_correct = 0
 accuracy_total = 0
-for i, f_a in enumerate(files_actual):
-    if f_a == files_predicted[i]:
+for i, f_a in enumerate(actual_files):
+    # print(f_a + " --> " + pred_files[i])      # Debug info
+    if f_a == pred_files[i]:
         accuracy_correct += 1
     accuracy_total += 1
 accuracy = accuracy_correct / accuracy_total
