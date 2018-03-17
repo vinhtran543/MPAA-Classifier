@@ -4,16 +4,20 @@ import string
 from lxml import html
 import random
 page_directories = {
-                    #"G": "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Ag&languages=en&count=800", 
-                    #"PG" : "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Apg&languages=en&count=800", 
-                    #"PG-13" : "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Apg_13&languages=en&count=800", 
-                    #"R": "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Ar&languages=en&count=800", 
-                    #"NC-17": "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Anc_17&languages=en&count=400"
+                    "G": "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Ag&languages=en&count=800", 
+                    "PG" : "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Apg&languages=en&count=800", 
+                    "PG-13" : "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Apg_13&languages=en&count=800", 
+                    "R": "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Ar&languages=en&count=800", 
+                    "NC-17": "http://www.imdb.com/search/title?title_type=feature&certificates=US%3Anc_17&languages=en&count=400"
                    }
 training_dir = "Training/"
 test_dir = "Testing/"
 
 for key in page_directories.keys():
+
+    # Goes to website in the page_directories dictionary
+    # Grabs the website and the appopriate title
+    # The appropriate urls for each individual movie
     print("Grabbing URL List - " + key)
     webpage = requests.get(page_directories[key])
     tree = html.fromstring(webpage.content)
@@ -21,9 +25,10 @@ for key in page_directories.keys():
     urls = tree.xpath('//h3[@class="lister-item-header"]//a/@href')
     titles = tree.xpath('//h3[@class="lister-item-header"]//a/text()')
 
-    printable = set(string.printable)
+    printable = set(string.printable) # For filtering bad Ascii
 
     for i in range(0,len(urls)):
+        #Goes to each Movie's website on imdb
         print("\tGrabbing - " + titles[i]);
         text_file = open(training_dir+key + "-" + titles[i].replace('/','-') + ".txt", "w")
         
@@ -34,8 +39,8 @@ for key in page_directories.keys():
         movie_page = requests.get('http://www.imdb.com/'+urls[i])
         movie_tree = html.fromstring(movie_page.content)
         movie_description = movie_tree.xpath('//div[@itemprop="description"]//p/text()')
+        # If no description move on
         if len(movie_description) > 0:
-            #    print(movie_description)
             text_file.write(filter(lambda x: x in printable, movie_description[0]))
         else:
             print("\t\t *** ERROR Omitting")
