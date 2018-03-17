@@ -1,6 +1,6 @@
 # Run python file formatted as
-# python3 classifier.py model_name.nb testing_folder_name --info
-# Note: --info argument is optional
+# python3 classifier.py model_name.nb testing_folder_name --nolist --info
+# Note: --nolist --info argument is optional
 
 import nltk
 import pickle
