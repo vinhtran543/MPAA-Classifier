@@ -74,24 +74,35 @@ for f in reader.fileids():
     # Iterate through the words in the file
     for w in words:
         # Iterate through each class in model
+        word_cond_prob = {}
+        msg = 0
         for c_name in model:
             # Score for this class for this word
-            word_cond_prob = (c_name['fd'][w] + 1) / (c_name['fd'].N() + vocab_count)
-            score[c_name['label']] = score[c_name['label']] + math.log(word_cond_prob)
+            word_cond_prob[c_name['label']] = (c_name['fd'][w] + 1) / (c_name['fd'].N() + vocab_count)
+            msg += word_cond_prob[c_name['label']]*class_prob[c_name['label']]
+
+        for c_name in model:
+            p_label = class_prob[c_name['label']]*word_cond_prob[c_name['label']]
+            score[c_name['label']] += math.log(p_label/msg)
+
+        #score[c_name['label']] = score[c_name['label']] + math.log(word_cond_prob)
     
     # Combine class probability with conditional probability as
     # final score
+    """
     for c_name in score:
         score[c_name] = score[c_name] + class_prob[c_name]
-
+    """
     # Compare scores to see which one is highest -- final verdict
     prediction = max(score, key=score.get)
     # Add prediction to prediction list
     pred_files.append(prediction)
+    #print(f, score);
 
     # Print prediction
     if not nolist_state:
         print(f + " #" + prediction + "#")
+    #print(f + " #" + prediction + "#")
 
 # print(model)        # Debug Info
 

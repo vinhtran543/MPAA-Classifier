@@ -6,5 +6,6 @@
 # -- info
 # Prints out accuracy, precision, recall, and f-score
 
+python3 test_splitter.py
 python3 training.py Training/ movietraining.nb
-python3 classifier.py movietraining.nb Testing/ --nolist --info
+python3 classifier.py movietraining.nb Testing/ --info
