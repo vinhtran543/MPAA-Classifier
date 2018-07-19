@@ -1,4 +1,4 @@
-# MPAA-Classifier-lin127
+# MPAA-Classifier
 This is a Bayesian Classifier to determine the MPAA ratings of a movie based on the synopsis.
 
 ## Scraper
