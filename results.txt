@@ -1,0 +1,66 @@
+
+G-A Magic Christmas.txt #PG#
+G-Adventures of the Wilderness Family 3.txt #G#
+G-Saving Faith.txt #G#
+G-The Magic Voyage.txt #G#
+PG-13-Bedazzled.txt #PG#
+PG-13-Billy Elliot.txt #PG#
+PG-13-Fast & Furious.txt #PG-13#
+PG-13-Guardians of the Galaxy Vol. 2.txt #PG-13#
+PG-13-Power Rangers.txt #PG-13#
+PG-13-The Founder.txt #PG-13#
+PG-Kangaroo Jack.txt #G#
+PG-Puss in Boots.txt #PG#
+PG-Star Wars: The Clone Wars.txt #PG#
+PG-The BFG.txt #PG#
+PG-The Majestic.txt #PG#
+PG-The Nightmare Before Christmas.txt #PG#
+R-A Good Day to Die Hard.txt #R#
+R-Dogma.txt #R#
+R-Fatal Attraction.txt #R#
+R-London Has Fallen.txt #R#
+R-Pineapple Express.txt #R#
+R-Requiem for a Dream.txt #R#
+R-RocknRolla.txt #R#
+R-The Beach.txt #R#
+R-Underworld: Blood Wars.txt #R#
+
+====Accuracy====
+Accuracy: 0.84
+21 out of 25
+
+====R Precision, Recall, F-Score====
+Precision: 1.0
+9 out of 9
+
+Recall: 1.0
+9 out of 9
+
+F-Score: 1.0
+
+====PG Precision, Recall, F-Score====
+Precision: 0.625
+5 out of 8
+
+Recall: 0.8333333333333334
+5 out of 6
+
+F-Score: 0.7142857142857143
+
+====PG-13 Precision, Recall, F-Score====
+Precision: 1.0
+4 out of 4
+
+Recall: 0.6666666666666666
+4 out of 6
+
+F-Score: 0.8
+
+====G Precision, Recall, F-Score====
+Precision: 0.75
+3 out of 4
+
+Recall: 0.75
+3 out of 4
+
+F-Score: 0.75
